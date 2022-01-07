@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  front:
+    build:
+      context: ./frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+      - pgdb
+  api:
+    build:
+      context: ./backend
+    command: ./app
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+      DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/sensor_cloud?schema=public"
+      JWT_SECRET: "some_secret"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pgdb
+  pgdb:
+    image: "postgres:14"
+    volumes:
+      - pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DATABASE: "falcon_manager"
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "testpass"
+      POSTGRES_ROOT_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+volumes:
+  pg:
+    name: postgresql
+
+
