@@ -1,16 +1,11 @@
-<script context="module" lang="ts">
-	export const prerender = true;
-</script>
-
 <script lang="ts">
+    export let user: any;
+    console.log('user in index: ' + user)
 </script>
 
-<svelte:head>
-	<title>Falcon Manager</title>
-</svelte:head>
 
 <section>
-    <h1>Welcome to falcon manager</h1>
+	<h1>Welcome to falcon manager</h1>
 </section>
 
 <style>
