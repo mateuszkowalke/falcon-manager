@@ -14,7 +14,7 @@ services:
   api:
     build:
       context: ./backend
-    command: ./app
+    command: cargo run
     volumes:
       - ./backend:/usr/src/app
     environment:
