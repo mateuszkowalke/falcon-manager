@@ -3,25 +3,26 @@ services:
   front:
     build:
       context: ./frontend
-    command: npm run dev
     volumes:
       - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - "3000:3000"
+      - 3000:3000
+      - 24678:24678
     depends_on:
       - api
       - pgdb
   api:
     build:
       context: ./backend
-    command: cargo run
+    command: cargo watch -x run
     volumes:
       - ./backend:/usr/src/app
     environment:
       DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/sensor_cloud?schema=public"
       JWT_SECRET: "some_secret"
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - pgdb
   pgdb:

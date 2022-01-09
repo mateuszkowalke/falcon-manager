@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	export async function load({ page, fetch, session, stuff }) {
+	export async function load({ session }) {
 		console.log('in load func');
 		if (!session) return {};
 		console.log('nav load session: ' + session);

@@ -61,15 +61,16 @@
 	<title>Register</title>
 </svelte:head>
 
+<h1>change</h1>
 <h1>register page</h1>
 <label>
 	name
-	<input type="text" bind:value={name} placeholder="Name" />
+	<input type="text" bind:value={name} required placeholder="Name" />
 </label>
 <br />
 <label>
 	email
-	<input type="email" bind:value={email} placeholder="Email" />
+	<input type="email" bind:value={email} required placeholder="Email" />
 </label>
 <br />
 <label>
@@ -99,12 +100,12 @@
 <br />
 <label>
 	password
-	<input type="password" bind:value={password} placeholder="Password" />
+	<input type="password" bind:value={password} required placeholder="Password" />
 </label>
 <br />
 <label>
 	repeat password
-	<input type="password" bind:value={password2} placeholder="Repeat Password" />
+	<input type="password" bind:value={password2} required placeholder="Repeat Password" />
 </label>
 <br />
 <label>
@@ -121,6 +122,7 @@
 {#if error}
 	<h3>{error}</h3>
 {/if}
+
 
 <style>
 </style>
