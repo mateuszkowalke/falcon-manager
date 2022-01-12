@@ -12,8 +12,8 @@ CREATE TABLE "users" (
   "address_id" int,
   "photo_file" varchar,
   "role" int,
-  "created_at" datetime,
-  "updated_at" datetime
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone
 );
 
 CREATE TABLE "users_breeding_projects" (
@@ -43,8 +43,8 @@ CREATE TABLE "breeding_projects" (
   "name" varchar,
   "vet_reg_no" varchar,
   "owner_id" int,
-  "created_at" datetime,
-  "updated_at" datetime
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone
 );
 
 CREATE TABLE "falcons" (
@@ -53,7 +53,7 @@ CREATE TABLE "falcons" (
   "ring" varchar,
   "species_id" int,
   "sex" sex,
-  "birth_date" datetime,
+  "birth_date" timestamp with time zone,
   "source" varchar,
   "aviary_id" int,
   "father" int,
@@ -65,8 +65,8 @@ CREATE TABLE "falcons" (
   "length_old" int,
   "weight_old" int,
   "notes" varchar,
-  "created_at" datetime,
-  "updated_at" datetime,
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone,
   "breeding_project_id" int
 );
 
@@ -75,8 +75,8 @@ CREATE TABLE "pairs" (
   "name" varchar,
   "male_id" int,
   "female_id" int,
-  "created_at" datetime,
-  "updated_at" datetime
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone
 );
 
 CREATE TABLE "species" (
@@ -93,8 +93,8 @@ CREATE TABLE "documents" (
   "scan_file" varchar,
   "raw_file" varchar,
   "office_id" int,
-  "created_at" datetime,
-  "updated_at" datetime
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone
 );
 
 CREATE TABLE "document_types" (
@@ -106,9 +106,9 @@ CREATE TABLE "aviaries" (
   "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "capacity" varchar,
-  "last_cleaned" datetime,
-  "created_at" datetime,
-  "updated_at" datetime,
+  "last_cleaned" timestamp with time zone,
+  "created_at" timestamp with time zone,
+  "updated_at" timestamp with time zone,
   "breeding_project_id" int
 );
 
