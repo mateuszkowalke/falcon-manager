@@ -1,4 +1,4 @@
-FROM rust:1.57
+FROM rust:1.58
 
 RUN cargo install cargo-watch
 
@@ -8,7 +8,5 @@ COPY . .
 
 ENV ROCKET_ADDRESS=0.0.0.0
 ENV ROCKET_PORT=8000
-
-RUN cargo build
 
 CMD ["cargo", "watch", "-x", "run"]

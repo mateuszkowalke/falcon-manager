@@ -19,7 +19,9 @@ services:
     volumes:
       - ./backend:/usr/src/app
     environment:
-      URL: "postgresql://testuser:testpass@pgdb:5432/falcon_manager?schema=public"
+      HOST: "0.0.0.0"
+      PORT: "8000"
+      DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/falcon_manager?schema=public"
       JWT_SECRET: "some_secret"
     ports:
       - 8000:8000

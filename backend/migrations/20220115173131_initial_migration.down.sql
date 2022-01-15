@@ -16,6 +16,8 @@ ALTER TABLE "falcons" DROP CONSTRAINT "falcons_species_id_fkey";
 
 ALTER TABLE "falcons" DROP CONSTRAINT "falcons_aviary_id_fkey";
 
+ALTER TABLE "falcons" DROP CONSTRAINT "falcons_sex_id_fkey";
+
 ALTER TABLE "falcons" DROP CONSTRAINT "falcons_father_fkey";
 
 ALTER TABLE "falcons" DROP CONSTRAINT "falcons_mother_fkey";
@@ -78,4 +80,4 @@ DROP TABLE IF EXISTS "users_breeding_projects";
 
 DROP TABLE IF EXISTS "users";
 
-DROP TYPE IF EXISTS "sex";
+DROP TABLE IF EXISTS "sex";
