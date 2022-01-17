@@ -7,6 +7,7 @@ use actix_web::{middleware, web, web::Data, App, HttpResponse, HttpServer, Respo
 use anyhow::Result;
 use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
+use env_logger::Env;
 
 // import todo module (routes and model)
 // mod todo;
@@ -29,7 +30,8 @@ async fn index() -> impl Responder {
 #[actix_web::main]
 async fn main() -> Result<()> {
     dotenv().ok();
-    env_logger::init();
+
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
 
     let database_url =
         env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");

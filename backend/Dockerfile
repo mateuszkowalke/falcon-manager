@@ -4,9 +4,10 @@ RUN cargo install cargo-watch
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY Cargo.toml Cargo.lock ./
 
-ENV ROCKET_ADDRESS=0.0.0.0
-ENV ROCKET_PORT=8000
+RUN cargo fetch
+
+COPY src migrations ./
 
 CMD ["cargo", "watch", "-x", "run"]
