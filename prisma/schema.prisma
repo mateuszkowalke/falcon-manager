@@ -8,10 +8,10 @@ datasource db {
 }
 
 enum Sex {
-        MALE
-        FEMALE
-        UNKNOWN
-    }
+    MALE
+    FEMALE
+    UNKNOWN
+}
 
 model Address {
     id                Int              @id @default(autoincrement())
@@ -83,13 +83,13 @@ model Cites {
 }
 
 model BreedingProject {
-    id                    Int                    @id @default(autoincrement())
+    id                    Int                     @id @default(autoincrement())
     name                  String
-    vetRegNo              String                 @map("vet_reg_no")
-    ownerId               Int                    @map("owner_id")
-    createdAt             DateTime               @default(now()) @map("created_at")
-    updatedAt             DateTime               @updatedAt @map("updated_at")
-    users                 User                   @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    vetRegNo              String                  @map("vet_reg_no")
+    ownerId               Int                     @map("owner_id")
+    createdAt             DateTime                @default(now()) @map("created_at")
+    updatedAt             DateTime                @updatedAt @map("updated_at")
+    users                 User                    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     addresses             Address[]
     aviaries              Aviary[]
     falcons               Falcon[]
@@ -233,15 +233,15 @@ model Species {
 }
 
 model User {
-    id                    Int                    @id @default(autoincrement())
+    id                    Int                     @id @default(autoincrement())
     email                 String
-    name                  String                 @unique
+    name                  String                  @unique
     password              String
-    photoFile             String?                @map("photo_file")
-    roleId                Int                    @map("role_id")
-    role                  Role                   @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-    createdAt             DateTime               @default(now()) @map("created_at")
-    updatedAt             DateTime               @updatedAt @map("updated_at")
+    photoFile             String?                 @map("photo_file")
+    roleId                Int                     @map("role_id")
+    role                  Role                    @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    createdAt             DateTime                @default(now()) @map("created_at")
+    updatedAt             DateTime                @updatedAt @map("updated_at")
     breedingProjects      BreedingProject[]
     usersBreedingProjects UsersBreedingProjects[]
 
