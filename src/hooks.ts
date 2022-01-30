@@ -1,25 +1,17 @@
 import cookie from 'cookie';
 import type { Handle } from '@sveltejs/kit';
-import * as jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '$lib/config';
+import { checkUser } from '$lib/auth';
 
-export const handle: Handle = async ({ request, resolve }) => {
-	const cookies = cookie.parse(request.headers.cookie || '');
+export const handle: Handle = async ({ event, resolve }) => {
+	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 
-	if (cookies.token) request.locals.authenticated = true;
+	if (cookies.token) event.locals.authenticated = true;
 
-	const response = await resolve(request);
+	const response = await resolve(event);
 
 	return response;
 };
 
-export const getSession = async (request) => {
-	const cookies = cookie.parse(request.headers.cookie || '');
-	if (!cookies.token) return;
-	const token = jwt.verify(cookies.token, JWT_SECRET);
-	const user = token;
-
-	return {
-		user
-	};
+export const getSession = async (event) => {
+	return checkUser(event.request);
 };

@@ -6,11 +6,6 @@
 	let email: string;
 	let password: string;
 	let password2: string;
-	let street: string;
-	let no: string;
-	let zipCode: string;
-	let city: string;
-	let country: string;
 	let role: Role;
 	let error: string;
 
@@ -66,31 +61,6 @@
 <label>
 	email
 	<input type="email" bind:value={email} placeholder="Email" />
-</label>
-<br />
-<label>
-	street
-	<input type="text" bind:value={street} placeholder="Street" />
-</label>
-<br />
-<label>
-	house no.
-	<input type="text" bind:value={no} placeholder="House no." />
-</label>
-<br />
-<label>
-	zip code
-	<input type="text" bind:value={zipCode} placeholder="Zip Code" />
-</label>
-<br />
-<label>
-	city
-	<input type="text" bind:value={city} placeholder="City" />
-</label>
-<br />
-<label>
-	country
-	<input type="text" bind:value={country} placeholder="Country" />
 </label>
 <br />
 <label>

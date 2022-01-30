@@ -4,7 +4,8 @@ import cookie from 'cookie';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$lib/config';
 
-export async function post({ body }) {
+export async function post({ request }) {
+    const body = await request.json();
 	const user = await prisma.user.findUnique({
 		where: {
 			name: body.name

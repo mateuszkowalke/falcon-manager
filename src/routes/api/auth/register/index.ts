@@ -4,7 +4,8 @@ import cookie from 'cookie';
 import { JWT_SECRET } from '$lib/config';
 import * as jwt from 'jsonwebtoken';
 
-export async function post({ body }) {
+export async function post({ request }) {
+    const body = await request.json();
 	const user = await prisma.user.findFirst({
 		where: { name: body.name }
 	});
@@ -17,17 +18,12 @@ export async function post({ body }) {
 			}
 		});
 
-		const address = await prisma.address.create({
-			data: { ...body.address }
-		});
-
 		const user = await prisma.user.create({
 			data: {
 				name: body.name,
 				password: hashedPass,
 				email: body.email,
 				roleId: role.id,
-				addressId: address.id
 			},
 			include: {
 				role: {
@@ -35,15 +31,6 @@ export async function post({ body }) {
 						permissions: true
 					}
 				}
-			}
-		});
-
-		await prisma.address.update({
-			where: {
-				id: address.id
-			},
-			data: {
-				ownerId: user.id
 			}
 		});
 

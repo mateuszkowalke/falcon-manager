@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/falcon_manager?schema=public"
+      JWT_SECRET: "some_secret"
+    ports:
+      - 3000:3000
+      - 24678:24678
+    depends_on:
+      - pgdb
+  pgdb:
+    image: "postgres:14"
+    volumes:
+      - pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DATABASE: "falcon_manager"
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "testpass"
+      POSTGRES_ROOT_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+volumes:
+  pg:
+    name: falcon-manager_postgresql

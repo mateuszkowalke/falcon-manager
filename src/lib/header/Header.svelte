@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let user: any;
-    console.log('user in nav: ' + user)
 </script>
 
 <header>
@@ -8,6 +7,7 @@
 		<ul>
 			{#if user}
 				<li><p>{user.name}</p></li>
+				<li><a href="falcons">falcons</a></li>
 			{:else}
 				<li><a href="login">login</a></li>
 				<li><a href="register">register</a></li>
