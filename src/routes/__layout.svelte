@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
 	export async function load({ url, params, fetch, session, stuff }) {
 		if (!session) return {};
-		console.log('nav load session: ' + session);
 		return {
 			props: {
 				user: session.user

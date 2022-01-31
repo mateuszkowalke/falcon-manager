@@ -1,4 +1,5 @@
-import { PrismaClient, Role, Permission, RolesOnPermissions } from '@prisma/client';
+import prismaClient from '@prisma/client';
+import type { Role, Permission, RolesOnPermissions } from '@prisma/client';
 
 enum RolesEnum {
 	SUPER_ADMIN = 'Super Admin',
@@ -23,6 +24,7 @@ enum PermissionEnum {
 	DeleteFalcon = 'DELETE_FALCON'
 }
 
+const { PrismaClient } = prismaClient;
 const prisma = new PrismaClient();
 
 export async function seedRolesAndPermissions() {
@@ -36,10 +38,18 @@ export async function seedRolesAndPermissions() {
 	const updateUserPerm = await createPermissionIfNotExist(PermissionEnum.UpdateUser);
 	const deleteUserPerm = await createPermissionIfNotExist(PermissionEnum.DeleteUser);
 
-	const getBreedingProjectsPerm = await createPermissionIfNotExist(PermissionEnum.GetBreedingProjects);
-	const createBreedingProjectPerm = await createPermissionIfNotExist(PermissionEnum.CreateBreedingProject);
-	const updateBreedingProjectPerm = await createPermissionIfNotExist(PermissionEnum.UpdateBreedingProject);
-	const deleteBreedingProjectPerm = await createPermissionIfNotExist(PermissionEnum.DeleteBreedingProject);
+	const getBreedingProjectsPerm = await createPermissionIfNotExist(
+		PermissionEnum.GetBreedingProjects
+	);
+	const createBreedingProjectPerm = await createPermissionIfNotExist(
+		PermissionEnum.CreateBreedingProject
+	);
+	const updateBreedingProjectPerm = await createPermissionIfNotExist(
+		PermissionEnum.UpdateBreedingProject
+	);
+	const deleteBreedingProjectPerm = await createPermissionIfNotExist(
+		PermissionEnum.DeleteBreedingProject
+	);
 
 	const getFalconsPerm = await createPermissionIfNotExist(PermissionEnum.GetFalcons);
 	const createFalconPerm = await createPermissionIfNotExist(PermissionEnum.CreateFalcon);
@@ -89,7 +99,7 @@ export async function seedRolesAndPermissions() {
 		updateUserPerm,
 		deleteUserPerm,
 		getBreedingProjectsPerm,
-		getFalconsPerm,
+		getFalconsPerm
 	);
 }
 
