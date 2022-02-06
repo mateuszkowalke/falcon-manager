@@ -1,12 +1,12 @@
 <script lang="ts">
-	export let user: any;
+    import { session } from '$app/stores'
 </script>
 
 <header>
 	<nav>
 		<ul>
-			{#if user}
-				<li><p>{user.name}</p></li>
+			{#if $session.user}
+				<li><p>{$session.user.name}</p></li>
 				<li><a href="falcons">falcons</a></li>
 			{:else}
 				<li><a href="login">login</a></li>

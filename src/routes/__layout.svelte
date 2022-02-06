@@ -1,30 +1,17 @@
-<script context="module" lang="ts">
-	export async function load({ url, params, fetch, session, stuff }) {
-		if (!session) return {};
-		return {
-			props: {
-				user: session.user
-			}
-		};
-	}
-</script>
-
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
 	import '../app.css';
-
-	export let user;
 </script>
 
 <svelte:head>
 	<title>Falcon Manager</title>
 </svelte:head>
 
-<Header {user} />
+<Header />
 
 <main>
-	<slot {user} />
+	<slot />
 </main>
 
 <Footer />

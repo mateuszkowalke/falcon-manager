@@ -1,5 +1,18 @@
+<script context="module">
+	export async function load({ session }) {
+		if (session.user) {
+			return {
+				status: 302,
+				redirect: '/'
+			};
+		}
+		return {};
+	}
+</script>
+
 <script lang="ts">
 	import { goto } from '$app/navigation';
+    import { session } from '$app/stores'
 
 	let name: string;
 	let password: string;
@@ -19,7 +32,8 @@
 				}
 			});
 			if (res.ok) {
-				//store logged in true - user
+			    const body = await res.json()
+                $session.user = body.user
 				goto('/');
 			} else {
 				error = 'error logging in';

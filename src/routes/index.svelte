@@ -1,6 +1,6 @@
 <script lang="ts">
-    export let user: any;
-    console.log('user in index: ', user)
+    import { session } from '$app/stores'
+    console.log('user in index: ', $session.user)
 </script>
 
 

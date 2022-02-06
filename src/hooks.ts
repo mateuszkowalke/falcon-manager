@@ -1,17 +1,17 @@
-import cookie from 'cookie';
-import type { Handle } from '@sveltejs/kit';
-import { checkUser } from '$lib/auth';
+import { checkUser } from "$lib/auth";
 
-export const handle: Handle = async ({ event, resolve }) => {
-	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
+export async function handle({ event, resolve }) {
+	event.locals.user = checkUser(event.request)
+	return await resolve(event);
+}
 
-	if (cookies.token) event.locals.authenticated = true;
-
-	const response = await resolve(event);
-
-	return response;
-};
-
-export const getSession = async (event) => {
-	return checkUser(event.request);
-};
+export function getSession({ locals }) {
+	return {
+		user: locals.user && {
+			username: locals.user.username,
+			email: locals.user.email,
+			image: locals.user.image,
+			bio: locals.user.bio
+		}
+	};
+}

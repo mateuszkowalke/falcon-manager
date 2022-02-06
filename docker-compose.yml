@@ -7,7 +7,7 @@ services:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/falcon_manager?schema=public"
+      DATABASE_URL: "postgresql://testuser:testpass@pgdb:5432/falcon_manager"
       JWT_SECRET: "some_secret"
     ports:
       - 3000:3000
