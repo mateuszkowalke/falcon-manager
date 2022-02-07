@@ -1,5 +1,6 @@
 <script lang="ts">
     import { session } from '$app/stores'
+    console.log($session.user)
 </script>
 
 <header>
@@ -8,6 +9,7 @@
 			{#if $session.user}
 				<li><p>{$session.user.name}</p></li>
 				<li><a href="falcons">falcons</a></li>
+				<li><a href="logout">logout</a></li>
 			{:else}
 				<li><a href="login">login</a></li>
 				<li><a href="register">register</a></li>

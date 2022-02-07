@@ -1,25 +1,26 @@
 import { prisma } from '$lib/prisma';
-import { checkUser } from '$lib/auth';
 
-export async function get({ request }) {
-    const user = request.headers.get('cookie')
+export async function get({ locals }) {
+    const user = await prisma.user.findFirst({
+        where: { name: locals.user.name }
+    });
 
-    if (!user) return { status: 401 }
+    if (!user) return { status: 401 };
 
     const breedingProjects = await prisma.breedingProject.findMany({
         where: {
             ownerId: user.id
         }
-    })
+    });
     const falcons = await prisma.falcon.findMany({
         where: {
-            breedingProjectId: { in: breedingProjects.map(el => el.id)}
+            breedingProjectId: { in: breedingProjects.map((el) => el.id) }
         }
-    })
+    });
 
-	return {
-		body: {
-			falcons
-		}
-	};
+    return {
+        body: [
+            ...falcons
+        ]
+    };
 }

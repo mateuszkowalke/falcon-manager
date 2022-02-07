@@ -33,7 +33,7 @@ export async function post({ request }) {
 		};
 	}
 
-	const { email, password, createdAt, updatedAt, ...tokenData } = user;
+	const { password, createdAt, updatedAt, ...tokenData } = user;
 
 	const token = jwt.sign(tokenData, JWT_SECRET, { expiresIn: '1h' });
 

@@ -1,12 +1,13 @@
 <script context="module">
-    export async function load({ params, fetch, session, stuff }) {
+	export async function load({ params, fetch, session, stuff }) {
 		const url = 'api/falcons';
 		const res = await fetch(url);
 
 		if (res.ok) {
+			const falcons = await res.json();
 			return {
 				props: {
-					falcons: await res.json()
+					falcons
 				}
 			};
 		}
@@ -17,8 +18,9 @@
 		};
 	}
 </script>
+
 <script lang="ts">
-    let falcons;
+	export let falcons;
 </script>
 
 <svelte:head>
@@ -26,8 +28,11 @@
 </svelte:head>
 
 <h1>Falcons</h1>
-<p>{falcons}</p>
+<ul>
+	{#each falcons as falcon}
+		<li><p>{falcon.name}</p></li>
+	{/each}
+</ul>
 
 <style>
 </style>
-

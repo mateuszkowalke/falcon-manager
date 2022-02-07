@@ -32,7 +32,7 @@ model Address {
 model Aviary {
     id                Int             @id @default(autoincrement())
     name              String
-    capacity          String
+    capacity          Int
     lastCleaned       DateTime        @map("last_cleaned")
     createdAt         DateTime        @default(now()) @map("created_at")
     updatedAt         DateTime        @updatedAt @map("updated_at")
@@ -87,9 +87,9 @@ model BreedingProject {
     name                  String
     vetRegNo              String                  @map("vet_reg_no")
     ownerId               Int                     @map("owner_id")
+    owner                 User                    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     createdAt             DateTime                @default(now()) @map("created_at")
     updatedAt             DateTime                @updatedAt @map("updated_at")
-    users                 User                    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     addresses             Address[]
     aviaries              Aviary[]
     falcons               Falcon[]
@@ -122,22 +122,22 @@ model Falcon {
     birthDate                             DateTime        @map("birth_date")
     source                                String
     aviaryId                              Int             @map("aviary_id")
-    father                                Int
-    mother                                Int
-    widthYoung                            Int             @map("width_young")
-    lengthYoung                           Int             @map("length_young")
-    weightYoung                           Int             @map("weight_young")
-    widthOld                              Int             @map("width_old")
-    lengthOld                             Int             @map("length_old")
-    weightOld                             Int             @map("weight_old")
-    notes                                 String
+    father                                Int?
+    falcons_falconsTofalcons_father       Falcon?          @relation("falconsTofalcons_father", fields: [father], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    mother                                Int?
+    falcons_falconsTofalcons_mother       Falcon?          @relation("falconsTofalcons_mother", fields: [mother], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    widthYoung                            Int?             @map("width_young")
+    lengthYoung                           Int?             @map("length_young")
+    weightYoung                           Int?             @map("weight_young")
+    widthOld                              Int?             @map("width_old")
+    lengthOld                             Int?             @map("length_old")
+    weightOld                             Int?             @map("weight_old")
+    notes                                 String?
     createdAt                             DateTime        @default(now()) @map("created_at")
     updatedAt                             DateTime        @updatedAt @map("updated_at")
     breedingProjectId                     Int             @map("breeding_project_id")
     aviaries                              Aviary          @relation(fields: [aviaryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     breeding_projects                     BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-    falcons_falconsTofalcons_father       Falcon          @relation("falconsTofalcons_father", fields: [father], references: [id], onDelete: NoAction, onUpdate: NoAction)
-    falcons_falconsTofalcons_mother       Falcon          @relation("falconsTofalcons_mother", fields: [mother], references: [id], onDelete: NoAction, onUpdate: NoAction)
     species                               Species         @relation(fields: [speciesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     documents                             Document[]
     other_falcons_falconsTofalcons_father Falcon[]        @relation("falconsTofalcons_father")

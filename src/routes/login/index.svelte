@@ -12,7 +12,7 @@
 
 <script lang="ts">
 	import { goto } from '$app/navigation';
-    import { session } from '$app/stores'
+	import { session } from '$app/stores';
 
 	let name: string;
 	let password: string;
@@ -25,15 +25,19 @@
 				method: 'POST',
 				body: JSON.stringify({
 					name,
-					password,
+					password
 				}),
 				headers: {
 					'Content-Type': 'application/json'
 				}
 			});
 			if (res.ok) {
-			    const body = await res.json()
-                $session.user = body.user
+				const body = await res.json();
+				$session.user = {
+					name: body.user.name,
+					email: body.user.email,
+					image: body.user.photoFile
+				};
 				goto('/');
 			} else {
 				error = 'error logging in';
