@@ -3,11 +3,11 @@
 	import { session } from '$app/stores';
 
     async function logout() {
-	await fetch('/api/auth/logout', {
-		method: 'POST'
-	});
-	$session.user = null;
-	goto('/');
+        await fetch('/api/auth/logout', {
+            method: 'POST'
+        });
+        $session.user = null;
+        goto('/');
     }
     logout();
 </script>
