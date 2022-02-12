@@ -21,6 +21,8 @@
 
 <script lang="ts">
 	export let falcons;
+	// todo
+    // use context and nested components for accordion
 </script>
 
 <svelte:head>
@@ -30,9 +32,18 @@
 <h1>Falcons</h1>
 <ul>
 	{#each falcons as falcon}
-		<li><p>{falcon.name}</p></li>
+		<li on:click={toggle} class="hidden">
+			<h3>{falcon.name}</h3>
+			<section>
+				<h4>Ring:</h4>
+				<p>{falcon.ring}</p>
+			</section>
+		</li>
 	{/each}
 </ul>
 
 <style>
+	.hidden > section {
+		display: none;
+	}
 </style>

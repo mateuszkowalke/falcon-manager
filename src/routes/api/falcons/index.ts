@@ -1,10 +1,7 @@
 import { prisma } from '$lib/prisma';
 
 export async function get({ locals }) {
-    const user = await prisma.user.findFirst({
-        where: { name: locals.user.name }
-    });
-
+    const user = locals.user;
     if (!user) return { status: 401 };
 
     const breedingProjects = await prisma.breedingProject.findMany({

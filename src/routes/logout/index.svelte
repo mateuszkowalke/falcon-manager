@@ -2,9 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 
-	fetch('/api/auth/logout', {
+    async function logout() {
+	await fetch('/api/auth/logout', {
 		method: 'POST'
 	});
 	$session.user = null;
 	goto('/');
+    }
+    logout();
 </script>

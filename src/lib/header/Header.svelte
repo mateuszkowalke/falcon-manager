@@ -1,6 +1,5 @@
 <script lang="ts">
     import { session } from '$app/stores'
-    console.log($session.user)
 </script>
 
 <header>
