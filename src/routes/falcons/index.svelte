@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ params, fetch, session, stuff }) {
-		const url = 'api/falcons';
+		const url = '/api/falcons';
 		const res = await fetch(url);
 
 		if (res.ok) {
@@ -20,9 +20,9 @@
 </script>
 
 <script lang="ts">
+	import { Accordion, AccordionItem } from 'svelte-accessible-accordion';
+
 	export let falcons;
-	// todo
-    // use context and nested components for accordion
 </script>
 
 <svelte:head>
@@ -30,20 +30,33 @@
 </svelte:head>
 
 <h1>Falcons</h1>
-<ul>
-	{#each falcons as falcon}
-		<li on:click={toggle} class="hidden">
-			<h3>{falcon.name}</h3>
-			<section>
-				<h4>Ring:</h4>
-				<p>{falcon.ring}</p>
-			</section>
-		</li>
-	{/each}
-</ul>
 
-<style>
-	.hidden > section {
-		display: none;
-	}
-</style>
+<Accordion>
+	{#each falcons as falcon}
+        <AccordionItem title={falcon.name}>
+            <ul>
+                <li>
+                    <p>Ring: {falcon.ring}</p>
+                </li>
+                <li>
+                    <p>{falcon.species.name}</p>
+                </li>
+                <li>
+                    <p>{falcon.sex.toLowerCase()}</p>
+                </li>
+                <li>
+                    <p>Hatched: {falcon.birthDate}</p>
+                </li>
+                <li>
+                    <p>Source: {falcon.source}</p>
+                </li>
+                <li>
+                    <p>In aviary: {falcon.aviary?.name || "not specified"}</p>
+                </li>
+                <li>
+                    <a href={`/falcons/${falcon.id}`}>Details</a>
+                </li>
+            </ul>
+        </AccordionItem>
+    {/each}
+</Accordion>
