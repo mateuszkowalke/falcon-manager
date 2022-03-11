@@ -1,6 +1,5 @@
 <script context="module">
 	export async function load({ params, fetch, session, stuff }) {
-		console.log(params);
 		const url = `/api/falcons/${params.id}`;
 		const res = await fetch(url);
 
@@ -21,7 +20,9 @@
 </script>
 
 <script lang="ts">
-	export let falcon;
+    import type { Falcon } from '@prisma/client'
+    import DatePicker from '$lib/DatePicker/DatePicker.svelte'
+	export let falcon: Falcon;
 	let editing = false;
 	let sex;
 
@@ -43,16 +44,16 @@
 {#if editing}
 	<ul>
 		<li>
-			<p>Name:</p>
-			<input type="text" bind:value={falcon.name} />
+			<label for="name">Name:</label>
+			<input type="text" name="name" bind:value={falcon.name} />
 		</li>
 		<li>
-			<p>Ring:</p>
-			<input type="text" bind:value={falcon.ring} />
+			<label for="ring">Ring:</label>
+			<input type="text" name="ring" bind:value={falcon.ring} />
 		</li>
 		<li>
-			<p>Sex:</p>
-            <select bind:value={sex}>
+			<label for="sex">Sex:</label>
+            <select name="sex" bind:value={sex}>
                 {#each ['male', 'female', 'unknown'] as opt}
                     <option value={opt}>
                         {opt}
@@ -61,8 +62,8 @@
             </select>
 		</li>
 		<li>
-			<p>Hatched:</p>
-			<input type="datetime-local" bind:value={falcon.birthDate} />
+			<label for="birthDate">Birth date:</label>
+            <DatePicker bind:date={falcon.birthDate} name="birthDate"/>
 		</li>
 	</ul>
 	<button on:click={save}>Save</button>
@@ -74,10 +75,10 @@
 			<p>Ring: {falcon.ring}</p>
 		</li>
 		<li>
-			<p>{falcon.species.name}</p>
+			<p>Species: {falcon.species.name}</p>
 		</li>
 		<li>
-			<p>{falcon.sex.toLowerCase()}</p>
+			<p>Sex: {falcon.sex.toLowerCase()}</p>
 		</li>
 		<li>
 			<p>Hatched: {falcon.birthDate}</p>
