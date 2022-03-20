@@ -21,10 +21,19 @@
 </script>
 
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { Accordion, AccordionItem } from 'svelte-accessible-accordion';
 	import type { Aviary } from '@prisma/client';
 
-    export let aviaries: Aviary[];
+	export let aviaries: Aviary[];
+
+	const editAviary = (id: number) => {
+		goto(`/aviaries/${id}`);
+	};
+
+	const deleteAviary = (id: number) => {
+		console.log(`deleting aviary with id: ${id}`);
+	};
 </script>
 
 <svelte:head>
@@ -44,8 +53,9 @@
 					<p>Last cleaned: {aviary.lastCleaned}</p>
 				</li>
 				<li>
-					<a href={`/aviaries/${aviary.id}`}>Details</a>
+					<button on:click={() => editAviary(aviary.id)}>Edit</button>
 				</li>
+				<li><button on:click={() => deleteAviary(aviary.id)}>Delete</button></li>
 			</ul>
 		</AccordionItem>
 	{/each}

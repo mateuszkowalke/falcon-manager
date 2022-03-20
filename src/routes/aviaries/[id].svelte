@@ -26,50 +26,18 @@
 	export let aviary: Aviary & {
 		falcons: Falcon[];
 	};
-	let editing = false;
 
-	function edit() {
-		editing = true;
-	}
-
-	function save() {
-		editing = false;
-	}
-
-	function del() {}
+	function save() {}
 </script>
 
 <svelte:head>
 	<title>{aviary.name}</title>
 </svelte:head>
 
-{#if editing}
-	<form>
-		<label for="name">Name:</label>
-		<input type="text" name="name" bind:value={aviary.name} />
-		<label for="lastCleaned">Last cleaned:</label>
-		<DatePicker name="lastCleaned" bind:date={aviary.lastCleaned} />
-		<button type="submit" on:click|preventDefault={save}>Save</button>
-	</form>
-{:else}
-	<h1>Aviary {aviary.name}</h1>
-
-	<ul>
-		<li>
-			<p>Capacity: {aviary.capacity}</p>
-		</li>
-		<li>
-			<p>Last cleaned: {aviary.lastCleaned}</p>
-		</li>
-		<li>
-			Falcons in aviary:
-			<ul>
-				{#each aviary.falcons as falcon}
-					<li>{falcon.name}</li>
-				{/each}
-			</ul>
-		</li>
-	</ul>
-	<button on:click={edit}>Edit</button>
-	<button>Delete</button>
-{/if}
+<form>
+	<label for="name">Name:</label>
+	<input type="text" name="name" bind:value={aviary.name} />
+	<label for="lastCleaned">Last cleaned:</label>
+	<DatePicker name="lastCleaned" bind:date={aviary.lastCleaned} />
+	<button type="submit" on:click|preventDefault={save}>Save</button>
+</form>

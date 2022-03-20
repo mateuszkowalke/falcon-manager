@@ -70,7 +70,7 @@
 				<li>
 					<button on:click={() => editFalcon(falcon.id)}>Edit</button>
 				</li>
-				<li><button on:click={deleteFalcon}>Delete</button></li>
+                <li><button on:click={() => deleteFalcon(falcon.id)}>Delete</button></li>
 			</ul>
 		</AccordionItem>
 	{/each}
