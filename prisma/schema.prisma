@@ -1,260 +1,260 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 enum Sex {
-  MALE
-  FEMALE
-  UNKNOWN
+    MALE
+    FEMALE
+    UNKNOWN
 }
 
 model Address {
-  id                Int              @id @default(autoincrement())
-  street            String
-  no                String
-  zipCode           String           @map("zip_code")
-  city              String
-  country           String
-  ownerId           Int              @map("owner_id")
-  owner             User             @relation(fields: [ownerId], references: [id])
-  breedingProjectId Int?             @map("breeding_project_id")
-  breedingProjects  BreedingProject? @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  offices           Office[]
+    id                Int              @id @default(autoincrement())
+    street            String
+    no                String
+    zipCode           String           @map("zip_code")
+    city              String
+    country           String
+    ownerId           Int              @map("owner_id")
+    owner             User             @relation(fields: [ownerId], references: [id])
+    breedingProjectId Int?             @map("breeding_project_id")
+    breedingProjects  BreedingProject? @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    offices           Office[]
 
-  @@map("addresses")
+    @@map("addresses")
 }
 
 model Aviary {
-  id                Int             @id @default(autoincrement())
-  name              String
-  capacity          Int
-  lastCleaned       DateTime        @map("last_cleaned")
-  createdAt         DateTime        @default(now()) @map("created_at")
-  updatedAt         DateTime        @updatedAt @map("updated_at")
-  breedingProjectId Int             @map("breeding_project_id")
-  breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  falcons           Falcon[]
+    id                Int             @id @default(autoincrement())
+    name              String
+    capacity          Int
+    lastCleaned       DateTime        @map("last_cleaned")
+    createdAt         DateTime        @default(now()) @map("created_at")
+    updatedAt         DateTime        @updatedAt @map("updated_at")
+    breedingProjectId Int             @map("breeding_project_id")
+    breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    falcons           Falcon[]
 
-  @@map("aviaries")
+    @@map("aviaries")
 }
 
 model BirthCert {
-  id        Int        @id @default(autoincrement())
-  scanFile  String     @map("scan_file")
-  rawFile   String     @map("raw_file")
-  officeId  Int        @map("office_id")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  offices   Office     @relation(fields: [officeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  documents Document[]
+    id        Int        @id @default(autoincrement())
+    scanFile  String     @map("scan_file")
+    rawFile   String     @map("raw_file")
+    officeId  Int        @map("office_id")
+    createdAt DateTime   @default(now()) @map("created_at")
+    updatedAt DateTime   @updatedAt @map("updated_at")
+    offices   Office     @relation(fields: [officeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    documents Document[]
 
-  @@map("birth_certs")
+    @@map("birth_certs")
 }
 
 model Registration {
-  id         Int        @id @default(autoincrement())
-  scan_file  String
-  raw_file   String
-  office_id  Int
-  created_at DateTime
-  updated_at DateTime
-  offices    Office     @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  documents  Document[]
+    id         Int        @id @default(autoincrement())
+    scan_file  String
+    raw_file   String
+    office_id  Int
+    created_at DateTime
+    updated_at DateTime
+    offices    Office     @relation(fields: [office_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    documents  Document[]
 
-  @@map("registrations")
+    @@map("registrations")
 }
 
 model Cites {
-  id        Int        @id @default(autoincrement())
-  scanFile  String     @map("scan_file")
-  rawFile   String     @map("raw_file")
-  officeId  Int        @map("office_id")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  offices   Office     @relation(fields: [officeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  documents Document[]
+    id        Int        @id @default(autoincrement())
+    scanFile  String     @map("scan_file")
+    rawFile   String     @map("raw_file")
+    officeId  Int        @map("office_id")
+    createdAt DateTime   @default(now()) @map("created_at")
+    updatedAt DateTime   @updatedAt @map("updated_at")
+    offices   Office     @relation(fields: [officeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    documents Document[]
 
-  @@map("cites")
+    @@map("cites")
 }
 
 model BreedingProject {
-  id                    Int                     @id @default(autoincrement())
-  name                  String
-  vetRegNo              String                  @map("vet_reg_no")
-  ownerId               Int                     @map("owner_id")
-  owner                 User                    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  createdAt             DateTime                @default(now()) @map("created_at")
-  updatedAt             DateTime                @updatedAt @map("updated_at")
-  addresses             Address[]
-  aviaries              Aviary[]
-  falcons               Falcon[]
-  offices               Office[]
-  usersBreedingProjects UsersBreedingProjects[]
+    id                    Int                     @id @default(autoincrement())
+    name                  String
+    vetRegNo              String                  @map("vet_reg_no")
+    ownerId               Int                     @map("owner_id")
+    owner                 User                    @relation(fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    createdAt             DateTime                @default(now()) @map("created_at")
+    updatedAt             DateTime                @updatedAt @map("updated_at")
+    addresses             Address[]
+    aviaries              Aviary[]
+    falcons               Falcon[]
+    offices               Office[]
+    usersBreedingProjects UsersBreedingProjects[]
 
-  @@map("breeding_projects")
+    @@map("breeding_projects")
 }
 
 model Document {
-  id             Int          @id @default(autoincrement())
-  falconId       Int          @map("falcon_id")
-  birthCertId    Int          @map("birth_cert_id")
-  citesId        Int          @map("cites_id")
-  registrationId Int          @map("registration_id")
-  birthCerts     BirthCert    @relation(fields: [birthCertId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  cites          Cites        @relation(fields: [citesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  falcons        Falcon       @relation(fields: [falconId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  registrations  Registration @relation(fields: [registrationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id             Int          @id @default(autoincrement())
+    falconId       Int          @map("falcon_id")
+    birthCertId    Int          @map("birth_cert_id")
+    citesId        Int          @map("cites_id")
+    registrationId Int          @map("registration_id")
+    birthCerts     BirthCert    @relation(fields: [birthCertId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    cites          Cites        @relation(fields: [citesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    falcons        Falcon       @relation(fields: [falconId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    registrations  Registration @relation(fields: [registrationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("documents")
+    @@map("documents")
 }
 
 model Falcon {
-  id                Int             @id @default(autoincrement())
-  name              String
-  ring              String
-  speciesId         Int             @map("species_id")
-  sex               Sex             @default(UNKNOWN)
-  birthDate         DateTime        @map("birth_date")
-  source            String
-  aviaryId          Int             @map("aviary_id")
-  fatherId          Int?
-  father            Falcon?         @relation("father_falcons", fields: [fatherId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  motherId          Int?            @map("mother")
-  mother            Falcon?         @relation("mother_falcons", fields: [motherId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  widthYoung        Int?            @map("width_young")
-  lengthYoung       Int?            @map("length_young")
-  weightYoung       Int?            @map("weight_young")
-  widthOld          Int?            @map("width_old")
-  lengthOld         Int?            @map("length_old")
-  weightOld         Int?            @map("weight_old")
-  notes             String?
-  createdAt         DateTime        @default(now()) @map("created_at")
-  updatedAt         DateTime        @updatedAt @map("updated_at")
-  breedingProjectId Int             @map("breeding_project_id")
-  aviaries          Aviary          @relation(fields: [aviaryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  breeding_projects BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  species           Species         @relation(fields: [speciesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  documents         Document[]
-  father_falcons    Falcon[]        @relation("father_falcons")
-  mother_falcons    Falcon[]        @relation("mother_falcons")
-  males             Pair[]          @relation("males")
-  females           Pair[]          @relation("females")
-  photos            Photo[]
+    id                Int             @id @default(autoincrement())
+    name              String
+    ring              String
+    speciesId         Int             @map("species_id")
+    sex               Sex             @default(UNKNOWN)
+    birthDate         DateTime        @map("birth_date")
+    source            String
+    aviaryId          Int             @map("aviary_id")
+    fatherId          Int?            @map("father")
+    father            Falcon?         @relation("father_falcons", fields: [fatherId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    motherId          Int?            @map("mother")
+    mother            Falcon?         @relation("mother_falcons", fields: [motherId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    widthYoung        Int?            @map("width_young")
+    lengthYoung       Int?            @map("length_young")
+    weightYoung       Int?            @map("weight_young")
+    widthOld          Int?            @map("width_old")
+    lengthOld         Int?            @map("length_old")
+    weightOld         Int?            @map("weight_old")
+    notes             String?
+    createdAt         DateTime        @default(now()) @map("created_at")
+    updatedAt         DateTime        @updatedAt @map("updated_at")
+    breedingProjectId Int             @map("breeding_project_id")
+    aviaries          Aviary          @relation(fields: [aviaryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    breeding_projects BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    species           Species         @relation(fields: [speciesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    documents         Document[]
+    father_falcons    Falcon[]        @relation("father_falcons")
+    mother_falcons    Falcon[]        @relation("mother_falcons")
+    males             Pair[]          @relation("males")
+    females           Pair[]          @relation("females")
+    photos            Photo[]
 
-  @@map("falcons")
+    @@map("falcons")
 }
 
 model OfficeType {
-  id      Int      @id @default(autoincrement())
-  name    String
-  offices Office[]
+    id      Int      @id @default(autoincrement())
+    name    String
+    offices Office[]
 
-  @@map("office_types")
+    @@map("office_types")
 }
 
 model Office {
-  id                Int             @id @default(autoincrement())
-  name              String
-  officeTypeId      Int             @map("office_type_id")
-  addressId         Int             @map("address_id")
-  breedingProjectId Int             @map("breeding_project_id")
-  addresses         Address         @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  officeTypes       OfficeType      @relation(fields: [officeTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  birthCerts        BirthCert[]
-  cites             Cites[]
-  registrations     Registration[]
+    id                Int             @id @default(autoincrement())
+    name              String
+    officeTypeId      Int             @map("office_type_id")
+    addressId         Int             @map("address_id")
+    breedingProjectId Int             @map("breeding_project_id")
+    addresses         Address         @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    officeTypes       OfficeType      @relation(fields: [officeTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    birthCerts        BirthCert[]
+    cites             Cites[]
+    registrations     Registration[]
 
-  @@map("offices")
+    @@map("offices")
 }
 
 model Pair {
-  id        Int      @id @default(autoincrement())
-  name      String
-  maleId    Int      @map("male_id")
-  femaleId  Int      @map("female_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  male      Falcon   @relation("males", fields: [maleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  female    Falcon   @relation("females", fields: [femaleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id        Int      @id @default(autoincrement())
+    name      String
+    maleId    Int      @map("male_id")
+    femaleId  Int      @map("female_id")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+    male      Falcon   @relation("males", fields: [maleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    female    Falcon   @relation("females", fields: [femaleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("pairs")
+    @@map("pairs")
 }
 
 model Permission {
-  id    Int                  @id @default(autoincrement())
-  name  String               @unique
-  roles RolesOnPermissions[]
+    id    Int                  @id @default(autoincrement())
+    name  String               @unique
+    roles RolesOnPermissions[]
 
-  @@map("permissions")
+    @@map("permissions")
 }
 
 model Role {
-  id          Int                  @id @default(autoincrement())
-  name        String               @unique
-  permissions RolesOnPermissions[]
-  users       User[]
+    id          Int                  @id @default(autoincrement())
+    name        String               @unique
+    permissions RolesOnPermissions[]
+    users       User[]
 
-  @@map("roles")
+    @@map("roles")
 }
 
 model RolesOnPermissions {
-  roleId       Int        @map("role_id")
-  permissionId Int        @map("permission_id")
-  permissions  Permission @relation(fields: [permissionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  roles        Role       @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    roleId       Int        @map("role_id")
+    permissionId Int        @map("permission_id")
+    permissions  Permission @relation(fields: [permissionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    roles        Role       @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
 
-  @@id([roleId, permissionId])
-  @@map("roles_permissions")
+    @@id([roleId, permissionId])
+    @@map("roles_permissions")
 }
 
 model Photo {
-  id       Int    @id @default(autoincrement())
-  falconId Int    @map("falcon_id")
-  file     String
-  falcons  Falcon @relation(fields: [falconId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id       Int    @id @default(autoincrement())
+    falconId Int    @map("falcon_id")
+    file     String
+    falcons  Falcon @relation(fields: [falconId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("photos")
+    @@map("photos")
 }
 
 model Species {
-  id      Int      @id @default(autoincrement())
-  name    String
-  latin   String
-  falcons Falcon[]
+    id      Int      @id @default(autoincrement())
+    name    String
+    latin   String
+    falcons Falcon[]
 
-  @@map("species")
+    @@map("species")
 }
 
 model User {
-  id                    Int                     @id @default(autoincrement())
-  email                 String
-  name                  String                  @unique
-  password              String
-  photoFile             String?                 @map("photo_file")
-  roleId                Int                     @map("role_id")
-  role                  Role                    @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  createdAt             DateTime                @default(now()) @map("created_at")
-  updatedAt             DateTime                @updatedAt @map("updated_at")
-  breedingProjects      BreedingProject[]
-  usersBreedingProjects UsersBreedingProjects[]
+    id                    Int                     @id @default(autoincrement())
+    email                 String
+    name                  String                  @unique
+    password              String
+    photoFile             String?                 @map("photo_file")
+    roleId                Int                     @map("role_id")
+    role                  Role                    @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    createdAt             DateTime                @default(now()) @map("created_at")
+    updatedAt             DateTime                @updatedAt @map("updated_at")
+    breedingProjects      BreedingProject[]
+    usersBreedingProjects UsersBreedingProjects[]
 
-  addresses Address[]
-  @@map("users")
+    addresses Address[]
+    @@map("users")
 }
 
 model UsersBreedingProjects {
-  id                Int             @id @default(autoincrement())
-  userId            Int             @map("user_id")
-  breedingProjectId Int             @map("breeding_project_id")
-  breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users             User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    id                Int             @id @default(autoincrement())
+    userId            Int             @map("user_id")
+    breedingProjectId Int             @map("breeding_project_id")
+    breedingProjects  BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    users             User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  @@map("users_breeding_projects")
+    @@map("users_breeding_projects")
 }

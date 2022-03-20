@@ -1,18 +1,17 @@
-<script lang="ts">
+<script type="ts">
+	import dayjs from 'dayjs';
+
 	export let format = 'YYYY-MM-DD';
-	export let date: Date;
+	export let date = new Date();
 	export let name: string;
 
-	let internal;
+	let internal: string;
 
-	const input = (x) => {
-        internal = `${x.getYear()}-${x.getMonth()}-${x.getDay()}`;
-	    console.log(internal);
-	};
-	const output = (x) => (date = new Date(x));
+	const input = (x: Date) => (internal = dayjs(x).format(format));
+	const output = (x: string) => (date = dayjs(x, format).toDate());
 
 	$: input(date);
 	$: output(internal);
 </script>
 
-<input name={name} type="date" bind:value={internal} />
+<input type="date" {name} bind:value={internal} />

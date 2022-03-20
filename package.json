@@ -43,6 +43,7 @@
 		"@sveltejs/kit": "^1.0.0-next.216",
 		"bcrypt": "^5.0.1",
 		"cookie": "^0.4.1",
+		"dayjs": "^1.10.8",
 		"dotenv": "^10.0.0",
 		"jsonwebtoken": "^8.5.1"
 	},

@@ -10,17 +10,13 @@ export async function get({ locals }: { locals: { user: User } }) {
 			ownerId: user.id
 		}
 	});
-	const falcons = await prisma.falcon.findMany({
+	const aviaries = await prisma.aviary.findMany({
 		where: {
 			breedingProjectId: { in: breedingProjects.map((el) => el.id) }
-		},
-		include: {
-			species: true,
-			aviaries: true
 		}
 	});
 
 	return {
-		body: [...falcons]
+		body: [...aviaries]
 	};
 }

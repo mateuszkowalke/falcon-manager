@@ -11,6 +11,7 @@
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
 			to enforce using \`import type\` instead of \`import\` for Types.
 			*/
+		"noImplicitAny": true,
         "importsNotUsedAsValues": "error",
         "isolatedModules": true,
         "resolveJsonModule": true,
@@ -39,5 +40,6 @@
         "src/**/*.js",
         "src/**/*.ts",
         "src/**/*.svelte"
-    ]
+    ],
+    "extends": "./.svelte-kit/tsconfig.json"
 }
