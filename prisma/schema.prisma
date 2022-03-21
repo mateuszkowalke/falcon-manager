@@ -136,7 +136,7 @@ model Falcon {
     createdAt         DateTime        @default(now()) @map("created_at")
     updatedAt         DateTime        @updatedAt @map("updated_at")
     breedingProjectId Int             @map("breeding_project_id")
-    aviaries          Aviary          @relation(fields: [aviaryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    aviary          Aviary          @relation(fields: [aviaryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     breeding_projects BreedingProject @relation(fields: [breedingProjectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     species           Species         @relation(fields: [speciesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
     documents         Document[]

@@ -45,6 +45,8 @@
 
 <h1>Falcons</h1>
 
+<button on:click={() => goto('falcons/new')}>New Falcon</button>
+
 <Accordion>
 	{#each falcons as falcon}
 		<AccordionItem title={falcon.name}>
@@ -70,7 +72,7 @@
 				<li>
 					<button on:click={() => editFalcon(falcon.id)}>Edit</button>
 				</li>
-                <li><button on:click={() => deleteFalcon(falcon.id)}>Delete</button></li>
+				<li><button on:click={() => deleteFalcon(falcon.id)}>Delete</button></li>
 			</ul>
 		</AccordionItem>
 	{/each}
