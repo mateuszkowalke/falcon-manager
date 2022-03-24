@@ -8,18 +8,10 @@ export async function get({ locals }: { locals: { user: User } }) {
 	const breedingProjects = await prisma.breedingProject.findMany({
 		where: {
 			ownerId: user.id
-		},
-		select: {
-		    id: true
-		}
-	});
-	const aviaries = await prisma.aviary.findMany({
-		where: {
-			breedingProjectId: { in: breedingProjects.map((el) => el.id) }
 		}
 	});
 
 	return {
-		body: [...aviaries]
+		body: [...breedingProjects]
 	};
 }

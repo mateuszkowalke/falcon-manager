@@ -2,17 +2,6 @@
 	import type { Load } from '@sveltejs/kit';
 	import { loadFalconFormData } from '$lib/loadFalconFormData';
 	export const load: Load = async function ({ params, fetch }) {
-		const url = `/api/falcons/${params.id}`;
-		const res = await fetch(url);
-
-		if (!res.ok) {
-			return {
-				status: res.status,
-				error: new Error(`Could not load ${url}`)
-			};
-		}
-		const falcon = await res.json();
-
 		const formData = await loadFalconFormData();
 		if ('error' in formData) {
 			return {
@@ -20,10 +9,9 @@
 				error: formData.error
 			};
 		}
-		const { species, breedingProjects, aviaries } = formData;
+		const {species, breedingProjects, aviaries} = formData;
 		return {
 			props: {
-				falcon,
 				species,
 				breedingProjects,
 				aviaries
@@ -33,24 +21,24 @@
 </script>
 
 <script lang="ts">
-	import type { Falcon, Species, Aviary, BreedingProject } from '@prisma/client';
+	import type { Aviary, Falcon, Species, BreedingProject } from '@prisma/client';
 	import FalconForm from '$lib/components/FalconForm/FalconForm.svelte';
 	export let falcon: Falcon & {
 		species: Species;
 		aviary: Aviary;
-	};
+	} = {} as Falcon & { species: Species; aviary: Aviary };
 	export let species: Species[];
-	export let aviaries: Aviary[];
 	export let breedingProjects: BreedingProject[];
+	export let aviaries: Aviary[];
 	let error: string;
 
-	async function update() {
+	async function save() {
 		error = '';
 		try {
-			const url = `/api/falcons/${falcon.id}`;
-			const res = await fetch(url, { method: 'PATCH', body: JSON.stringify(falcon) });
+			const url = '/api/falcons';
+			const res = await fetch(url, { method: 'POST', body: JSON.stringify(falcon) });
 			if (!res.ok) {
-				error = 'error updating falcon data';
+				error = 'error saving falcon data';
 			}
 		} catch (err) {
 			console.error(err);
@@ -60,11 +48,10 @@
 </script>
 
 <svelte:head>
-	<title>Falcon details</title>
+	<title>New Falcon</title>
 </svelte:head>
 
-<h1>Falcon {falcon.name}</h1>
-<FalconForm {falcon} {species} {breedingProjects} {aviaries} submitHandler={update} />
+<FalconForm {falcon} {species} {breedingProjects} {aviaries} submitHandler={save} />
 {#if error}
 	<h3>{error}</h3>
 {/if}

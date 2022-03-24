@@ -1,53 +1,15 @@
-<script context="module" lang="ts">
-	import type { Load } from '@sveltejs/kit';
-	export const load: Load = async function ({ params, fetch }) {
-		const speciesUrl = `/api/species`;
-		const speciesRes = await fetch(speciesUrl);
-
-		if (!speciesRes.ok) {
-			return {
-				status: speciesRes.status,
-				error: new Error(`Could not load ${speciesUrl}`)
-			};
-		}
-
-		const breedingProjectsUrl = `/api/species`;
-		const breedingProjectsRes = await fetch(speciesUrl);
-
-		if (!breedingProjectsRes.ok) {
-			return {
-				status: breedingProjectsRes.status,
-				error: new Error(`Could not load ${breedingProjectsUrl}`)
-			};
-		}
-
-        // todo
-        // request aviaries
-		const species = await speciesRes.json();
-		const breedingProjects = await breedingProjectsRes.json();
-		// todo
-		// create endpoints for listing species, breedingProjects and aviaries per user
-
-		return {
-			props: {
-				species,
-				breedingProjects
-			}
-		};
-	};
-</script>
-
 <script lang="ts">
 	import DatePicker from '$lib/DatePicker/DatePicker.svelte';
-	import type { Aviary, Falcon, Species } from '@prisma/client';
-	import type { Sex } from '@prisma/client';
+	import type { Sex, Aviary, Falcon, Species, BreedingProject } from '@prisma/client';
 
 	export let falcon: Falcon & {
 		species: Species;
 		aviary: Aviary;
 	};
+	export let species: Species[];
+	export let breedingProjects: BreedingProject[];
+	export let aviaries: Aviary[];
 	export let submitHandler: () => void;
-	let sex: Sex;
 </script>
 
 <form>
@@ -56,18 +18,34 @@
 	<label for="ring">Ring:</label>
 	<input type="text" name="ring" bind:value={falcon.ring} />
 	<label for="sex">Sex:</label>
-	<select name="sex" bind:value={sex}>
+	<select name="sex" bind:value={falcon.sex}>
 		{#each ['male', 'female', 'unknown'] as opt}
-			<option value={opt}>
+			<option value={opt.toUpperCase()}>
 				{opt}
 			</option>
 		{/each}
 	</select>
 	<label for="species">Species:</label>
-	<select name="species" bind:value={sex}>
-		{#each ['male', 'female', 'unknown'] as opt}
-			<option value={opt}>
-				{opt}
+	<select name="species" bind:value={falcon.speciesId}>
+		{#each species as spec}
+			<option value={spec.id}>
+				{spec.name}
+			</option>
+		{/each}
+	</select>
+	<label for="breedingProjects">BreedingProject:</label>
+	<select name="breedingProjects" bind:value={falcon.breedingProjectId}>
+		{#each breedingProjects as breedingProject}
+			<option value={breedingProject.id}>
+				{breedingProject.name}
+			</option>
+		{/each}
+	</select>
+	<label for="aviaries">Aviary:</label>
+	<select name="aviaries" bind:value={falcon.aviaryId}>
+		{#each aviaries as aviary}
+			<option value={aviary.id}>
+				{aviary.name}
 			</option>
 		{/each}
 	</select>
