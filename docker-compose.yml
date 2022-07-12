@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      PG_HOST: "pgdb"
+      PG_PORT: "5432"
+      PG_USER: "testuser"
+      PG_PASS: "testpass"
+      PG_DB: "falcon_manager"
+      PORT: "3000"
+    depends_on:
+      - pgdb
+  pgdb:
+    image: "postgres:14"
+    environment:
+      POSTGRES_DATABASE: "falcon_manager"
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "testpass"
+      POSTGRES_ROOT_PASSWORD: "root"
+    ports:
+      - "5432:5432"

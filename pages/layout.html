@@ -1,0 +1,26 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Falcon manager</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Falcon manager</h1>
+        <nav><a href="/falcons">Lista sokołów</a><a href="/pairs">Pary</a></nav>
+    </header>
+    <main>
+        {{template "content" .}}
+    </main>
+    <footer></footer>
+    <script src="/static/index.js"></script>
+</body>
+
+</html>
+{{end}}

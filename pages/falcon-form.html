@@ -1,0 +1,17 @@
+{{define "content"}}
+<form action="/falcon" method="post">
+    <label for="name">Imię</label>
+    <input id="name" type="text" name="name">
+    <label for="ring-no">Numer obrączki</label>
+    <input id="ring-no" type="text" name="ringNo">
+    <label for="species-id">Gatunek</label>
+    <select id="species-id" name="speciesId">
+        {{range .}}
+        <option value="{{.Id}}">{{.Name}}</option>
+        {{end}}
+    </select>
+    <label for="male">samiec</label>
+    <input type="radio" id="male" name="sex" value="male">
+    <input type="submit" value="Wyślij">
+</form>
+{{end}}
