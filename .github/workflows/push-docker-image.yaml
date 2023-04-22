@@ -27,7 +27,7 @@ jobs:
             echo $folder
             echo $tmpName
             docker build --file $folder/Dockerfile --tag $tmpName $folder 
-            IMAGE_ID=falcon-manager/$IMAGE_NAME
+            IMAGE_ID=mateuszkowalke/$IMAGE_NAME
             VERSION=${{ github.ref_name }}
 
             echo IMAGE_ID=$IMAGE_ID
