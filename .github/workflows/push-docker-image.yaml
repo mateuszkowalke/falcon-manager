@@ -10,37 +10,30 @@ jobs:
     runs-on: ubuntu-latest
     if: GitHub.ref == 'refs/heads/main' || GitHub.ref_type == 'tag' || GitHub.event_name == 'release'
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: mateuszkowalke/falcon-manager2
-
-      - name: Login to DockerHub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           
-      - name: Build and push keystone backend
-        uses: docker/build-push-action@v3
-        with:
-          context: ./apps/keystone
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push the images
+        run: |
+          for DockerfilePath in $(find . -name=Dockerfile);
+          do
+            folder=${versionFilePath%"/Dockerfile"}
+            IMAGE_NAME=${folder##*/}
 
-      - name: Build and push doc-generator
-        uses: docker/build-push-action@v3
-        with:
-          context: ./apps/doc-generator
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+            tmpName="image-$RANDOM"
+            docker build $folder --file $folder/Dockerfile --tag $tmpName
+            IMAGE_ID=falcon-manager/$IMAGE_NAME
+            VERSION=${{ github.ref_name }}
+
+            echo IMAGE_ID=$IMAGE_ID
+            echo VERSION=$VERSION
+
+            docker tag $tmpName $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION
+          done;
   redeploy:
     name: Redeploy - Webhook call
     runs-on: ubuntu-latest
