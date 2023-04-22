@@ -1,0 +1,219 @@
+<style>
+    table,
+    td {
+        border: 1px solid black;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+</style>
+
+<body>
+    <h1>
+        <b>ZAŚWIADCZENIE O URODZENIU W HODOWLI NR ............</b>
+    </h1>
+    <h3>wydawane w związku z przepisami dotyczącymi ochrony gatunków dzikiej fauny w drodze regulacji handlu nimi</h3>
+    {{#with docData.office.breedingProject}}
+    <table>
+        <thead>
+            <th><b>1.Hodowca</b></th>
+        </thead>
+        <tr>
+            <td>imię i nazwisko lub nazwa:</td>
+            <td>{{owner.firstName}} {{owner.lastName}}
+            </td>
+        </tr>
+        <tr>
+            <td>adres:</td>
+            <td>{{owner.personalAddress.street}} {{owner.personalAddress.no}}, {{owner.personalAddress.zipCode}}
+                {{owner.personalAddress.city}},</br>
+                obiekt: {{address.street}} {{address.no}}, {{address.zipCode}} {{address.city}}
+            </td>
+        </tr>
+        <tr>
+            <td>numer hodowli i organ rejestrujący (jeśli zarejestrowana)</td>
+            <td>{{vetRegNo}}</td>
+        </tr>
+    </table>
+    {{/with}}
+
+    <table>
+        <thead>
+            <th><b>2.Gatunek</b></th>
+        </thead>
+        <tr>
+            <td>nazwa naukowa:</td>
+            <td>
+                {{#each docData.falconSpecies}}
+                {{this.species.latin}} - {{this.count}} szt.</br>
+                {{/each}}
+            </td>
+        </tr>
+        <tr>
+            <td>nazwa potoczna:</td>
+            <td>
+                {{#each docData.falconSpecies}}
+                {{this.species.name}} - {{this.count}} szt.</br>
+                {{/each}}
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <th><b>3.Zaświadczenie wydane dla</b> (jedno zaświadczenie tylko dla jednego rodzaju)</th>
+        </thead>
+        <tr>
+            <td><b>☒ <i>osobników żywych</b></i></td>
+            <td><b>☐ <i>osobników martwych</b></i></td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <th><b>4.Liczba osobników</b></th>
+        </thead>
+        <tr>
+            <td><b><i>żeńskich: </b></i>{{docData.falconSexes.female}}</td>
+            <td><b><i>męskich: </b></i>{{docData.falconSexes.male}}</td>
+            <td><b><i>obojnaczych: </b></i>0</td>
+            <td><b><i>płci nieznanej: </b></i>{{docData.falconSexes.unknown}}</td>
+            <td><b><i>łącznie: </b></i>{{docData.falconSexes.total}}</td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <th><b>5.Daty</b> (dd.mm.rrrr.)</th>
+        </thead>
+        <tr>
+            <td><b><i>urodzenia (wyklucia itp.): </b></i>{{formatDate docData.falconBirths.earliest}} - {{formatDate docData.falconBirths.latest}}</td>
+            <td><b><i>kontroli weterynaryjnej miotu: ............</b></i></td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+                <th><b>6.Opis indywidualnego oznakowania osobników (jeśli zastosowano) i cech szczególnych (jeśli to możliwe do określenia)</b> (dd.mm.rrrr.)</th>
+            </tr>
+            <tr>
+                <th><b>lp.</b></th>
+                <th><b>płeć</b></th>
+                <th><b>oznakowanie (np. nr chipu)</b></th>
+                <th><b>cechy szczególne</b></th>
+            </tr>
+        </thead>
+        {{#each docData.falcons}}
+        <tr>
+            <td><i>{{inc @index}}</i></td>
+            <td><i>{{translateSex this.sex}}</i></td>
+            <td><i>Obrączka zamknięta nr {{this.ring}}</i></td>
+            <td><i>brak</i></td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <table>
+        <thead>
+            <th><b>7.Miejsce zapłodnienia lub (w przypadku rozmnażania bezpłciowego) powstania zarodka</b></th>
+        </thead>
+        <tr>
+            <td><b>☐ <i>nieznane</b></i></td>
+            <td><b>☐ <i>na wolności</b></i></td>
+            <td><b>☒ <i>w hodowli, w której okaz się urodził</b></i></td>
+        </tr>
+            <td><b>☐ <i>w innej hodowli lub innym środowisku kontrolowanym</br>podać w jakim</b></i></td>
+            <td></td>
+        <tr>
+        </tr>
+            <td><b>☐ <i>inne - podać jakie</b></i></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <th><b>8.Czy do stada hodowlanego są wprowadzane osobniki pochodzące z wolności?</b></th>
+        </thead>
+        <tr>
+            <td><b>☐ <i>nie wiadomo</b></i></td>
+            <td><b>☒ <i>nie</b></i></td>
+            <td><b>☐ <i>tak - liczba takich osobników, ich % w stadzie:</b></i></td>
+        </tr>
+        <thead>
+            <th><b><i>cel wprowadzania tych osobników do stada:</i></b></th>
+        </thead>
+        <tr>
+            <td><b>☐ <i>utworzenie stada hodowlanego</b></i></td>
+            <td><b>☐ <i>wykorzystanie zwierząt skonfiskowanych</b></i></td>
+        </tr>
+        <tr>
+            <td><b>☐ <i>zapobieżenie lub zmniejszenie skali szkodliwego chowu wsobnego</b></i></td>
+            <td><b>☐ <i>nieokreślony</b></i></td>
+        </tr>
+        <tr>
+            <td><b><i>w innym celu - podać w jakim</i></b></td>
+        </tr>
+        <thead>
+            <th><b><i>inne uwagi dotyczące wprowadzania z wolności:</i></b></th>
+            <th>brak</th>
+        </thead>
+    </table>
+
+    <table>
+        <thead>
+            <th><b>9.Sposób utworzenia stada hodowlanego - źródło osobników rodzicielskich</b></th>
+            <tr>
+                <th><b>lp.</b></th>
+                <th><b>kiedy pozyskano</b></th>
+                <th><b>źródło osobników</b></th>
+                <th><b>dokumenty lub źródło danych</b></th>
+            </tr>
+        </thead>
+        {{#each docData.falconParentPairs}}
+        <tr>
+            <td><b>{{firstPairIdx @index}}. matka</br>(dla osobników z pozycji 6.{{inc this.firstIdx}} - 6.{{inc this.lastIdx}})</b></td>
+            <td>{{formatDate this.female.accquiredDate}}</td>
+            <td>{{this.female.source}}</td>
+            <td>{{this.female.citesNo}}</td>
+        </tr>
+        <tr>
+            <td><b>{{secondPairIdx @index}}. ojciec</br>(dla osobników z pozycji 6.{{inc this.firstIdx}} - 6.{{inc this.lastIdx}})</b></td>
+            <td>{{formatDate this.male.accquiredDate}}</td>
+            <td>{{this.male.source}}</td>
+            <td>{{this.male.citesNo}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <table>
+        <thead>
+            <th><b>10.Minimalna liczba pokoleń uzyskanych w środowisku kontrolowanym z tego stada hodowlanego:</b></th>
+        </thead>
+        <tr>
+            <td><b>☒ <i>nieznana</b></i></td>
+            <td><b>☐ <i>znana - co najmniej: ..........</b></i></td>
+        </tr>
+        <thead>
+            <th><b>źródło informacji o liczbie uzyskanych pokoleń (np. świadczące o tym dokumenty):</b></th>
+        </thead>
+        <tr><td>nie dotyczy</td></tr>
+        <thead>
+            <th><b>jeśli liczba pokoleń nieznana lub mniejsza od 2 zaznaczyć, czy:</b></th>
+        </thead>
+        <tr>
+            <td><b>☒ <i>stado <u>jest</u> zarządzane w sposób, który okazał się skuteczny i niezawodny w wytworzeniu potomstwa drugiego pokolenia w środowisku kontrolowanym</b></i></td>
+        </tr>
+        <tr>
+            <td><b>☐ <i>stado <u>nie jest</u> zarządzane w sposób, który okazał się skuteczny i niezawodny w wytworzeniu potomstwa drugiego pokolenia w środowisku kontrolowanym</b></i></td>
+        </tr>
+        <thead>
+            <th><b><i>krótko uzasadnić ocenę (podać główne warunki i metody stosowanego sposobu zarządzania):</i></b></th>
+        </thead>
+        <tr>
+            <td>Ptaki prztrzymywane są w wolierach spełniających warunki wynikające ze specyficznych potrzeb bytowych tychże ptaków. Karmione są zróżnicowaną i dobrą jakościowo karmą (gołębie, przepiórki, pisklęta jednodniowe, szczury). Całe stado znajduje się pod stałą opieką lekarza weterynarii, zastosowanie mają zabezpieczenia bioasekuracyjne (ograniczenie wizyt osób trzecich, siatki o drobnym oczku zabezpieczające przed wejściem zwierząt dzikich, zasada "pomieszczenie pełne-pomieszczenie puste") oraz profilaktyka przciwpasożytnicza.</td>
+        </tr>
+    </table>
+
+</body>

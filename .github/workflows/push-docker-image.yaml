@@ -1,0 +1,53 @@
+name: falcon-manager
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+jobs:
+  publish-docker-images:
+    runs-on: ubuntu-latest
+    if: GitHub.ref == 'refs/heads/main' || GitHub.ref_type == 'tag' || GitHub.event_name == 'release'
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: mateuszkowalke/falcon-manager2
+
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and push keystone backend
+        uses: docker/build-push-action@v3
+        with:
+          context: ./apps/keystone
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push doc-generator
+        uses: docker/build-push-action@v3
+        with:
+          context: ./apps/doc-generator
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  redeploy:
+    name: Redeploy - Webhook call
+    runs-on: ubuntu-latest
+    needs: [publish-docker-images]
+    steps:
+      - name: Deploy docker container webhook
+        uses: joelwmale/webhook-action@master
+        env:
+          WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
+          data: "{ 'secret': '${{ secrets.DEPLOY_SECRET }}' }"

@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  keystone:
+    build:
+      context: ./apps/keystone
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pgdb
+    environment:
+      DATABASE_URL: postgresql://testuser:testpass@pgdb:5432/falcon_manager
+
+  doc-generator:
+    build:
+      context: ./apps/doc-generator
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    init: true
+    security_opt:
+      - seccomp=./apps/doc-generator/chrome.json
+    environment:
+      KEYSTONE_GRAPHQL_URL: http://keystone:3000/api/graphql
+
+  pgdb:
+    image: 'postgres:14'
+    volumes:
+      - pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DATABASE: 'falcon_manager'
+      POSTGRES_USER: 'testuser'
+      POSTGRES_PASSWORD: 'testpass'
+      POSTGRES_ROOT_PASSWORD: 'root'
+    ports:
+      - '5432:5432'
+volumes:
+  pg:
+    name: falcon_manager
+
