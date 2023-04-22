@@ -32,7 +32,8 @@ jobs:
             echo VERSION=$VERSION
 
             docker tag $tmpName $IMAGE_ID:$VERSION
-            docker push $IMAGE_ID:$VERSION $IMAGE_ID:latest
+            docker tag $tmpName $IMAGE_ID:latest
+            docker push $IMAGE_ID
           done;
   redeploy:
     name: Redeploy - Webhook call
