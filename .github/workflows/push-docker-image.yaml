@@ -24,8 +24,6 @@ jobs:
             IMAGE_NAME=${folder##*/}
 
             tmpName="image-$RANDOM"
-            echo $folder
-            echo $tmpName
             docker build --file $folder/Dockerfile --tag $tmpName $folder 
             IMAGE_ID=mateuszkowalke/$IMAGE_NAME
             VERSION=${{ github.ref_name }}
@@ -34,7 +32,7 @@ jobs:
             echo VERSION=$VERSION
 
             docker tag $tmpName $IMAGE_ID:$VERSION
-            docker push $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION $IMAGE_ID:latest
           done;
   redeploy:
     name: Redeploy - Webhook call
