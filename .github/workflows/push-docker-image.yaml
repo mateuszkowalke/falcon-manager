@@ -20,7 +20,7 @@ jobs:
         run: |
           for DockerfilePath in $(find . -name Dockerfile);
           do
-            folder=${versionFilePath%"/Dockerfile"}
+            folder=${DockerfilePath%"/Dockerfile"}
             IMAGE_NAME=${folder##*/}
 
             tmpName="image-$RANDOM"
