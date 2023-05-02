@@ -9,7 +9,8 @@ type User {
   password: PasswordState
   personalAddress: Address
   isAdmin: Boolean
-  falcons: Falcon
+  falcons(where: FalconWhereInput! = {}, orderBy: [FalconOrderByInput!]! = [], take: Int, skip: Int! = 0): [Falcon!]
+  falconsCount(where: FalconWhereInput! = {}): Int
   breedingProjects(where: BreedingProjectWhereInput! = {}, orderBy: [BreedingProjectOrderByInput!]! = [], take: Int, skip: Int! = 0): [BreedingProject!]
   breedingProjectsCount(where: BreedingProjectWhereInput! = {}): Int
   addresses(where: AddressWhereInput! = {}, orderBy: [AddressOrderByInput!]! = [], take: Int, skip: Int! = 0): [Address!]
@@ -47,7 +48,7 @@ input UserWhereInput {
   email: StringFilter
   personalAddress: AddressWhereInput
   isAdmin: BooleanFilter
-  falcons: FalconWhereInput
+  falcons: FalconManyRelationFilter
   breedingProjects: BreedingProjectManyRelationFilter
   addresses: AddressManyRelationFilter
   aviaries: AviaryManyRelationFilter
@@ -106,6 +107,12 @@ input NestedStringFilter {
 input BooleanFilter {
   equals: Boolean
   not: BooleanFilter
+}
+
+input FalconManyRelationFilter {
+  every: FalconWhereInput
+  some: FalconWhereInput
+  none: FalconWhereInput
 }
 
 input BreedingProjectManyRelationFilter {
@@ -177,7 +184,7 @@ input UserUpdateInput {
   password: String
   personalAddress: AddressRelateToOneForUpdateInput
   isAdmin: Boolean
-  falcons: FalconRelateToOneForUpdateInput
+  falcons: FalconRelateToManyForUpdateInput
   breedingProjects: BreedingProjectRelateToManyForUpdateInput
   addresses: AddressRelateToManyForUpdateInput
   aviaries: AviaryRelateToManyForUpdateInput
@@ -194,10 +201,11 @@ input AddressRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input FalconRelateToOneForUpdateInput {
-  create: FalconCreateInput
-  connect: FalconWhereUniqueInput
-  disconnect: Boolean
+input FalconRelateToManyForUpdateInput {
+  disconnect: [FalconWhereUniqueInput!]
+  set: [FalconWhereUniqueInput!]
+  create: [FalconCreateInput!]
+  connect: [FalconWhereUniqueInput!]
 }
 
 input BreedingProjectRelateToManyForUpdateInput {
@@ -254,7 +262,7 @@ input UserCreateInput {
   password: String
   personalAddress: AddressRelateToOneForCreateInput
   isAdmin: Boolean
-  falcons: FalconRelateToOneForCreateInput
+  falcons: FalconRelateToManyForCreateInput
   breedingProjects: BreedingProjectRelateToManyForCreateInput
   addresses: AddressRelateToManyForCreateInput
   aviaries: AviaryRelateToManyForCreateInput
@@ -270,9 +278,9 @@ input AddressRelateToOneForCreateInput {
   connect: AddressWhereUniqueInput
 }
 
-input FalconRelateToOneForCreateInput {
-  create: FalconCreateInput
-  connect: FalconWhereUniqueInput
+input FalconRelateToManyForCreateInput {
+  create: [FalconCreateInput!]
+  connect: [FalconWhereUniqueInput!]
 }
 
 input BreedingProjectRelateToManyForCreateInput {
@@ -388,7 +396,8 @@ type Aviary {
   id: ID!
   name: String
   capacity: Int
-  falcons: Falcon
+  falcons(where: FalconWhereInput! = {}, orderBy: [FalconOrderByInput!]! = [], take: Int, skip: Int! = 0): [Falcon!]
+  falconsCount(where: FalconWhereInput! = {}): Int
   lastCleaned: DateTime
   breedingProject: BreedingProject
   owner: User
@@ -407,7 +416,7 @@ input AviaryWhereInput {
   id: IDFilter
   name: StringFilter
   capacity: IntFilter
-  falcons: FalconWhereInput
+  falcons: FalconManyRelationFilter
   lastCleaned: DateTimeNullableFilter
   breedingProject: BreedingProjectWhereInput
   owner: UserWhereInput
@@ -438,7 +447,7 @@ input AviaryOrderByInput {
 input AviaryUpdateInput {
   name: String
   capacity: Int
-  falcons: FalconRelateToOneForUpdateInput
+  falcons: FalconRelateToManyForUpdateInput
   lastCleaned: DateTime
   breedingProject: BreedingProjectRelateToOneForUpdateInput
   owner: UserRelateToOneForUpdateInput
@@ -460,7 +469,7 @@ input AviaryUpdateArgs {
 input AviaryCreateInput {
   name: String
   capacity: Int
-  falcons: FalconRelateToOneForCreateInput
+  falcons: FalconRelateToManyForCreateInput
   lastCleaned: DateTime
   breedingProject: BreedingProjectRelateToOneForCreateInput
   owner: UserRelateToOneForCreateInput
@@ -795,12 +804,6 @@ input PairWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input FalconManyRelationFilter {
-  every: FalconWhereInput
-  some: FalconWhereInput
-  none: FalconWhereInput
-}
-
 input PairOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -824,11 +827,10 @@ input PairUpdateInput {
   updatedAt: DateTime
 }
 
-input FalconRelateToManyForUpdateInput {
-  disconnect: [FalconWhereUniqueInput!]
-  set: [FalconWhereUniqueInput!]
-  create: [FalconCreateInput!]
-  connect: [FalconWhereUniqueInput!]
+input FalconRelateToOneForUpdateInput {
+  create: FalconCreateInput
+  connect: FalconWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PairUpdateArgs {
@@ -849,9 +851,9 @@ input PairCreateInput {
   updatedAt: DateTime
 }
 
-input FalconRelateToManyForCreateInput {
-  create: [FalconCreateInput!]
-  connect: [FalconWhereUniqueInput!]
+input FalconRelateToOneForCreateInput {
+  create: FalconCreateInput
+  connect: FalconWhereUniqueInput
 }
 
 type Species {

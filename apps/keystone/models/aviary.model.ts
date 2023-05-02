@@ -17,7 +17,7 @@ export const Aviary = list({
       validation: { isRequired: true, min: 0 },
       defaultValue: 0,
     }),
-    falcons: relationship({ ref: "Falcon.aviary" }),
+    falcons: relationship({ ref: "Falcon.aviary", many: true }),
     lastCleaned: timestamp(),
     breedingProject: relationship({
       ref: "BreedingProject.aviaries",

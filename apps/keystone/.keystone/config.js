@@ -121,7 +121,7 @@ var User = (0, import_core.list)({
         update: isAdmin
       }
     }),
-    falcons: (0, import_fields.relationship)({ ref: "Falcon.owner" }),
+    falcons: (0, import_fields.relationship)({ ref: "Falcon.owner", many: true }),
     breedingProjects: (0, import_fields.relationship)({
       ref: "BreedingProject.owner",
       many: true
@@ -197,7 +197,7 @@ var Aviary = (0, import_core3.list)({
       validation: { isRequired: true, min: 0 },
       defaultValue: 0
     }),
-    falcons: (0, import_fields3.relationship)({ ref: "Falcon.aviary" }),
+    falcons: (0, import_fields3.relationship)({ ref: "Falcon.aviary", many: true }),
     lastCleaned: (0, import_fields3.timestamp)(),
     breedingProject: (0, import_fields3.relationship)({
       ref: "BreedingProject.aviaries",

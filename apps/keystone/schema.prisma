@@ -21,7 +21,7 @@ model User {
   personalAddress   Address?          @relation("User_personalAddress", fields: [personalAddressId], references: [id])
   personalAddressId String?           @map("personalAddress")
   isAdmin           Boolean           @default(false)
-  falcons           Falcon?           @relation("Falcon_owner")
+  falcons           Falcon[]          @relation("Falcon_owner")
   breedingProjects  BreedingProject[] @relation("BreedingProject_owner")
   addresses         Address[]         @relation("Address_owner")
   aviaries          Aviary[]          @relation("Aviary_owner")
@@ -53,8 +53,7 @@ model Aviary {
   id                String           @id @default(cuid())
   name              String           @default("")
   capacity          Int              @default(0)
-  falcons           Falcon?          @relation("Aviary_falcons", fields: [falconsId], references: [id])
-  falconsId         String?          @unique @map("falcons")
+  falcons           Falcon[]         @relation("Falcon_aviary")
   lastCleaned       DateTime?
   breedingProject   BreedingProject? @relation("Aviary_breedingProject", fields: [breedingProjectId], references: [id])
   breedingProjectId String?          @map("breedingProject")
@@ -109,9 +108,10 @@ model Falcon {
   inPairId             String?        @map("inPair")
   parentPair           Pair?          @relation("Falcon_parentPair", fields: [parentPairId], references: [id])
   parentPairId         String?        @map("parentPair")
-  aviary               Aviary?        @relation("Aviary_falcons")
+  aviary               Aviary?        @relation("Falcon_aviary", fields: [aviaryId], references: [id])
+  aviaryId             String?        @map("aviary")
   owner                User?          @relation("Falcon_owner", fields: [ownerId], references: [id])
-  ownerId              String?        @unique @map("owner")
+  ownerId              String?        @map("owner")
   createdAt            DateTime?      @default(now())
   updatedAt            DateTime?      @default(now())
   from_Pair_male       Pair[]         @relation("Pair_male")
@@ -121,6 +121,8 @@ model Falcon {
   @@index([speciesId])
   @@index([inPairId])
   @@index([parentPairId])
+  @@index([aviaryId])
+  @@index([ownerId])
 }
 
 model Pair {
