@@ -30,6 +30,9 @@ export async function postGeneratorForm(req: Request, res: Response) {
 
   const pdf = await generatorService.generateBredInCaptivity(docData);
 
+  // TODO
+  // generatorService.sendRawDoc(req.user!.sessionCookie, pdf);
+
   res.contentType("application/pdf");
   res.setHeader("Content-Disposition", 'attachment; filename="doc.pdf"');
   res.send(pdf);

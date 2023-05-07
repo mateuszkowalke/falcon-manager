@@ -1,4 +1,6 @@
 import puppeteer from "puppeteer";
+import http from "node:http";
+import FormData from "form-data";
 import { hbs } from "../hbs";
 import {
   FalconParentPairs,
@@ -211,6 +213,56 @@ class GeneratorService {
     }, [] as FalconParentPairs);
 
     return data;
+  }
+
+  // TODO
+  async sendRawDoc(sessionCookie: string, rawDoc: Buffer) {
+    const form = new FormData();
+    form.append(
+      "operations",
+      `{"variables":{"data":{"documentNumber":"test2","rawFile":{"upload":null}}},"query":"mutation ($data: DocumentCreateInput!) {\n  item: createDocument(data: $data) {\n    id\n    label: documentNumber\n    __typename\n  }\n}"}`
+    );
+    form.append("map", '{"1":["variables.data.rawFile.upload"]}');
+    form.append("1", rawDoc);
+
+    const req = http.request(
+      this.keyestoneGraphQLUrl,
+      {
+        method: "POST",
+        headers: {
+          "content-type": `multipart/form-data; boundary=${form.getBoundary()}`,
+          cookie: sessionCookie,
+        },
+      },
+      (res) => {
+        console.log(`STATUS: ${res.statusCode}`);
+        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+        res.setEncoding("utf8");
+        res.on("data", (chunk) => {
+          console.log(`BODY: ${chunk}`);
+        });
+        res.on("end", () => {
+          console.log("No more data in response.");
+        });
+      }
+    );
+    form.pipe(req);
+
+    // const keystoneResp = await fetch(this.keyestoneGraphQLUrl, {
+    //   method: "POST",
+    //   headers: {
+    //     cookie: sessionCookie,
+    //   },
+    //   body: form,
+    // });
+    //
+    // try {
+    //   const body = await keystoneResp.json();
+    //   return this.processRawGenerateDocData(body.data as GenerateDocData);
+    // } catch (err) {
+    //   console.error("Error processing keystoneResp.");
+    //   throw err;
+    // }
   }
 }
 
