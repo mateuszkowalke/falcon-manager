@@ -278,6 +278,15 @@ var Falcon = (0, import_core5.list)({
     accquiredDate: (0, import_fields5.timestamp)({ validation: { isRequired: true } }),
     citesNo: (0, import_fields5.text)(),
     source: (0, import_fields5.text)({ validation: { isRequired: true } }),
+    documents: (0, import_fields5.relationship)({
+      ref: "Document.falcon",
+      ui: {
+        hideCreate: true,
+        displayMode: "select",
+        createView: { fieldMode: "hidden" }
+      },
+      many: true
+    }),
     widthYoung: (0, import_fields5.integer)(),
     lengthYoung: (0, import_fields5.integer)(),
     weightYoung: (0, import_fields5.integer)(),
@@ -375,12 +384,15 @@ var DocumentType = (0, import_core8.list)({
   access: sharedResourceAccess,
   fields: {
     name: (0, import_fields8.text)({ validation: { isRequired: true } })
+  },
+  ui: {
+    labelField: "name"
   }
 });
 var Document = (0, import_core8.list)({
   access: defaultAccess,
   fields: {
-    falcon: (0, import_fields8.relationship)({ ref: "Falcon" }),
+    falcon: (0, import_fields8.relationship)({ ref: "Falcon.documents" }),
     documentType: (0, import_fields8.relationship)({ ref: "DocumentType" }),
     documentNumber: (0, import_fields8.text)(),
     scanFile: (0, import_fields8.file)({ storage: "documentsStorage" }),
@@ -396,6 +408,9 @@ var Document = (0, import_core8.list)({
     updatedAt: (0, import_fields8.timestamp)({
       defaultValue: { kind: "now" }
     })
+  },
+  ui: {
+    labelField: "documentNumber"
   },
   hooks: {
     resolveInput: attachSessionUser

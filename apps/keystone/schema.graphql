@@ -580,6 +580,8 @@ type Falcon {
   accquiredDate: DateTime
   citesNo: String
   source: String
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int, skip: Int! = 0): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   widthYoung: Int
   lengthYoung: Int
   weightYoung: Int
@@ -618,6 +620,7 @@ input FalconWhereInput {
   accquiredDate: DateTimeFilter
   citesNo: StringFilter
   source: StringFilter
+  documents: DocumentManyRelationFilter
   widthYoung: IntNullableFilter
   lengthYoung: IntNullableFilter
   weightYoung: IntNullableFilter
@@ -691,6 +694,7 @@ input FalconUpdateInput {
   accquiredDate: DateTime
   citesNo: String
   source: String
+  documents: DocumentRelateToManyForUpdateInput
   widthYoung: Int
   lengthYoung: Int
   weightYoung: Int
@@ -738,6 +742,7 @@ input FalconCreateInput {
   accquiredDate: DateTime
   citesNo: String
   source: String
+  documents: DocumentRelateToManyForCreateInput
   widthYoung: Int
   lengthYoung: Int
   weightYoung: Int

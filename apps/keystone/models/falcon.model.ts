@@ -35,6 +35,15 @@ export const Falcon = list({
     accquiredDate: timestamp({ validation: { isRequired: true } }),
     citesNo: text(),
     source: text({ validation: { isRequired: true } }),
+    documents: relationship({
+      ref: "Document.falcon",
+      ui: {
+        hideCreate: true,
+        displayMode: "select",
+        createView: { fieldMode: "hidden" },
+      },
+      many: true,
+    }),
     widthYoung: integer(),
     lengthYoung: integer(),
     weightYoung: integer(),

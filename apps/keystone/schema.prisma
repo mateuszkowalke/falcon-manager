@@ -87,36 +87,36 @@ model Address {
 }
 
 model Falcon {
-  id                   String         @id @default(cuid())
-  name                 String         @default("")
-  ring                 String         @default("")
-  species              Species?       @relation("Falcon_species", fields: [speciesId], references: [id])
-  speciesId            String?        @map("species")
-  sex                  FalconSexType? @default(UNKNOWN)
-  birthDate            DateTime?
-  accquiredDate        DateTime
-  citesNo              String         @default("")
-  source               String         @default("")
-  widthYoung           Int?
-  lengthYoung          Int?
-  weightYoung          Int?
-  widthOld             Int?
-  lengthOld            Int?
-  weightOld            Int?
-  notes                String         @default("")
-  inPair               Pair?          @relation("Falcon_inPair", fields: [inPairId], references: [id])
-  inPairId             String?        @map("inPair")
-  parentPair           Pair?          @relation("Falcon_parentPair", fields: [parentPairId], references: [id])
-  parentPairId         String?        @map("parentPair")
-  aviary               Aviary?        @relation("Falcon_aviary", fields: [aviaryId], references: [id])
-  aviaryId             String?        @map("aviary")
-  owner                User?          @relation("Falcon_owner", fields: [ownerId], references: [id])
-  ownerId              String?        @map("owner")
-  createdAt            DateTime?      @default(now())
-  updatedAt            DateTime?      @default(now())
-  from_Pair_male       Pair[]         @relation("Pair_male")
-  from_Pair_female     Pair[]         @relation("Pair_female")
-  from_Document_falcon Document[]     @relation("Document_falcon")
+  id               String         @id @default(cuid())
+  name             String         @default("")
+  ring             String         @default("")
+  species          Species?       @relation("Falcon_species", fields: [speciesId], references: [id])
+  speciesId        String?        @map("species")
+  sex              FalconSexType? @default(UNKNOWN)
+  birthDate        DateTime?
+  accquiredDate    DateTime
+  citesNo          String         @default("")
+  source           String         @default("")
+  documents        Document[]     @relation("Document_falcon")
+  widthYoung       Int?
+  lengthYoung      Int?
+  weightYoung      Int?
+  widthOld         Int?
+  lengthOld        Int?
+  weightOld        Int?
+  notes            String         @default("")
+  inPair           Pair?          @relation("Falcon_inPair", fields: [inPairId], references: [id])
+  inPairId         String?        @map("inPair")
+  parentPair       Pair?          @relation("Falcon_parentPair", fields: [parentPairId], references: [id])
+  parentPairId     String?        @map("parentPair")
+  aviary           Aviary?        @relation("Falcon_aviary", fields: [aviaryId], references: [id])
+  aviaryId         String?        @map("aviary")
+  owner            User?          @relation("Falcon_owner", fields: [ownerId], references: [id])
+  ownerId          String?        @map("owner")
+  createdAt        DateTime?      @default(now())
+  updatedAt        DateTime?      @default(now())
+  from_Pair_male   Pair[]         @relation("Pair_male")
+  from_Pair_female Pair[]         @relation("Pair_female")
 
   @@index([speciesId])
   @@index([inPairId])

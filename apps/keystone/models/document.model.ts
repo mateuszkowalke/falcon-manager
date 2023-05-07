@@ -1,10 +1,5 @@
 import { list } from "@keystone-6/core";
-import {
-  text,
-  relationship,
-  timestamp,
-  file,
-} from "@keystone-6/core/fields";
+import { text, relationship, timestamp, file } from "@keystone-6/core/fields";
 
 import {
   defaultAccess,
@@ -18,13 +13,17 @@ export const DocumentType = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
   },
+
+  ui: {
+    labelField: "name",
+  },
 });
 
 export const Document = list({
   access: defaultAccess,
 
   fields: {
-    falcon: relationship({ ref: "Falcon" }),
+    falcon: relationship({ ref: "Falcon.documents" }),
     documentType: relationship({ ref: "DocumentType" }),
     documentNumber: text(),
     scanFile: file({ storage: "documentsStorage" }),
@@ -40,6 +39,10 @@ export const Document = list({
     updatedAt: timestamp({
       defaultValue: { kind: "now" },
     }),
+  },
+
+  ui: {
+    labelField: "documentNumber",
   },
 
   hooks: {
