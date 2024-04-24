@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    command: sh -c './wait-for pgdb:5432 -- ./main'
+    ports:
+      - "3000:3000"
+    environment:
+      PG_HOST: "pgdb"
+      PG_PORT: "5432"
+      PG_USER: "testuser"
+      PG_PASS: "testpass"
+      PG_DB: "falcon-manager"
+      PORT: "3000"
+    depends_on:
+      - pgdb
+  pgdb:
+    image: "postgres:16"
+    environment:
+      POSTGRES_DATABASE: "falcon-manager"
+      POSTGRES_USER: "testuser"
+      POSTGRES_PASSWORD: "testpass"
+      POSTGRES_ROOT_PASSWORD: "root"
+    ports:
+      - "5432:5432"
