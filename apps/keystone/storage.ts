@@ -20,9 +20,9 @@ function getLocalStorageConfig(env: DevEnv) {
     type: "file",
     storagePath: "public/documents",
     serverRoute: {
-      path: "documents",
+      path: "files",
     },
-    generateUrl: (path) => `${env.ASSET_BASE_URL}/documents${path}`,
+    generateUrl: (path) => `${env.ASSET_BASE_URL}/files${path}`,
   };
 
   const localImagesStorage: StorageConfig = {
@@ -51,9 +51,9 @@ function getS3StorageConfig(env: ProdEnv) {
     type: "file",
     storagePath: "public/documents",
     serverRoute: {
-      path: "documents",
+      path: "files",
     },
-    generateUrl: (path) => `${env.ASSET_BASE_URL}/documents${path}`,
+    generateUrl: (path) => `${env.ASSET_BASE_URL}/files${path}`,
   };
 
   const localImagesStorage: StorageConfig = {
