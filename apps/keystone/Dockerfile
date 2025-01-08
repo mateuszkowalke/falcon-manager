@@ -1,5 +1,5 @@
 # Use NodeJS server for the app.
-FROM node:18 
+FROM node:20
 RUN npm install -g npm@latest
 # Copy files as a non-root user. The `node` user is built in the Node image.
 WORKDIR /app
