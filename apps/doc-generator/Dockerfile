@@ -1,11 +1,11 @@
-FROM node:22 as builder
+FROM node:22 AS builder
 WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 # Use NodeJS server for the app.
-FROM node:18 
+FROM node:22
 # install chrome for puppeteer
 RUN apt-get update \
     && apt-get install -y wget gnupg \

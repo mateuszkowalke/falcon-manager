@@ -35,7 +35,7 @@ var import_auth = require("@keystone-6/auth");
 var import_access = require("@keystone-6/core/access");
 var import_session = require("@keystone-6/core/session");
 var sessionSecret = process.env.SESSION_SECRET;
-if (!sessionSecret && process.env.NODE_ENV !== "production") {
+if (!sessionSecret && true) {
   sessionSecret = (0, import_crypto.randomBytes)(32).toString("hex");
 }
 function isAdmin({ session: session2 }) {
@@ -89,7 +89,7 @@ var { withAuth } = (0, import_auth.createAuth)({
   identityField: "email",
   sessionData: "id isAdmin",
   secretField: "password",
-  initFirstItem: process.env.NODE_ENV === "production" ? void 0 : {
+  initFirstItem: false ? void 0 : {
     fields: ["firstName", "lastName", "email", "password"]
   }
 });
@@ -487,9 +487,9 @@ function getLocalStorageConfig(env) {
     type: "file",
     storagePath: "public/documents",
     serverRoute: {
-      path: "documents"
+      path: "files"
     },
-    generateUrl: (path) => `${env.ASSET_BASE_URL}/documents${path}`
+    generateUrl: (path) => `${env.ASSET_BASE_URL}/files${path}`
   };
   const localImagesStorage = {
     kind: "local",
@@ -515,9 +515,9 @@ function getS3StorageConfig(env) {
     type: "file",
     storagePath: "public/documents",
     serverRoute: {
-      path: "documents"
+      path: "files"
     },
-    generateUrl: (path) => `${env.ASSET_BASE_URL}/documents${path}`
+    generateUrl: (path) => `${env.ASSET_BASE_URL}/files${path}`
   };
   const localImagesStorage = {
     kind: "local",
@@ -582,5 +582,3 @@ var keystone_default = withAuth(
     storage: getStorageConfig(parsedEnv)
   })
 );
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {});

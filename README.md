@@ -1,5 +1,6 @@
-
 # DEV WORKFLOW
+
+Before installing the dependencies set `NODE_ENV` to `development`.
 
 Use `docker compose up` and `npm run dev`. This always has to run to generate appropriate graphQL and prisma schemas.
 To make final checks before release run `docker compose up` - this simulates prod environment.

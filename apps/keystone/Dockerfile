@@ -1,5 +1,5 @@
 # Use NodeJS server for the app.
-FROM node:20
+FROM node:22
 RUN npm install -g npm@latest
 # Copy files as a non-root user. The `node` user is built in the Node image.
 WORKDIR /app
@@ -12,6 +12,7 @@ ENV NODE_ENV $NODE_ENV
 COPY --chown=node:node package*.json ./
 RUN npm ci --ignore-scripts && npm cache clean --force
 COPY --chown=node:node . .
+ENV SESSION_SECRET=12312312312312312312312312312312
 RUN npm run postinstall
 RUN npm run build
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
