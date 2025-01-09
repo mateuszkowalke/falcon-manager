@@ -2,4 +2,3 @@
 node_modules
 keystone.db
 *.log
-.keystone

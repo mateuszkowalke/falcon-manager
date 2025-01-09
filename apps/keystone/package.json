@@ -10,14 +10,14 @@
     "test:unit:watch": "jest --watch",
     "start": "keystone start",
     "build": "keystone build",
-    "postinstall": "keystone postinstall",
+    "postinstall": "keystone postinstall --fix",
     "migrate": "keystone prisma migrate deploy",
     "deploy": "keystone build && keystone prisma migrate deploy"
   },
   "dependencies": {
-    "@keystone-6/auth": "^5.0.0",
-    "@keystone-6/core": "^3.0.1",
-    "@keystone-6/fields-document": "^5.0.0",
+    "@keystone-6/auth": "^8.1.0",
+    "@keystone-6/core": "^6.3.1",
+    "@keystone-6/fields-document": "^9.1.1",
     "form-data": "^4.0.0",
     "pg": "^8.8.0",
     "zod": "^3.20.2"
