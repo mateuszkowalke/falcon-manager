@@ -51,7 +51,7 @@ function getS3StorageConfig(env: ProdEnv) {
     type: "file",
     storagePath: "public/documents",
     serverRoute: {
-      path: "files",
+      path: "/files",
     },
     generateUrl: (path) => `${env.ASSET_BASE_URL}/files${path}`,
   };
@@ -61,7 +61,7 @@ function getS3StorageConfig(env: ProdEnv) {
     type: "image",
     storagePath: "public/images",
     serverRoute: {
-      path: "images",
+      path: "/images",
     },
     generateUrl: (path) => `${env.ASSET_BASE_URL}/images${path}`,
   };
